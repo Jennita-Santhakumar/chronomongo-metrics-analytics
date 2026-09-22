@@ -28,12 +28,12 @@ jobs:
         run: pip install -r requirements-dev.txt
 
       - name: Run unit tests
-        run: pytest tests/unit -q
+        run: python -m pytest tests/unit -q
 
       - name: Run integration tests
         env:
           MONGO_URI: mongodb://localhost:27017
-        run: pytest tests/integration -q
+        run: python -m pytest tests/integration -q
 
   frontend:
     runs-on: ubuntu-latest

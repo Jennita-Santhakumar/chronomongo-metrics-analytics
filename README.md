@@ -99,8 +99,8 @@ npm run dev
 
 ```bash
 cd backend
-pytest tests/unit          # pure pipeline-builder logic, no DB required
-pytest tests/integration   # real aggregation correctness against a live MongoDB
+python -m pytest tests/unit          # pure pipeline-builder logic, no DB required
+python -m pytest tests/integration   # real aggregation correctness against a live MongoDB
 ```
 
 ## Measured Results
