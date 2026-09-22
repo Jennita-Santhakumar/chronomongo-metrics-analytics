@@ -1,0 +1,18 @@
+{
+  "document_count": 5000000,
+  "baseline_seconds": {
+    "hourly": 3.060275611999714,
+    "percentiles": 1.8298536219999733,
+    "cohort": 8.148896271999547
+  },
+  "optimized_seconds": {
+    "hourly": 0.10983144900001207,
+    "percentiles": 1.6553681260002122,
+    "cohort": 2.20464983400052
+  },
+  "speedup_x": {
+    "hourly": 27.86,
+    "percentiles": 1.11,
+    "cohort": 3.7
+  }
+}
