@@ -1,0 +1,50 @@
+services:
+  mongodb:
+    image: mongo:7.0
+    command: ["--replSet", "rs0", "--bind_ip_all"]
+    ports:
+      - "27050:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  mongo-init:
+    image: mongo:7.0
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    volumes:
+      - ./mongo-init:/scripts
+    entrypoint: ["sh", "/scripts/init-replica-set.sh"]
+    restart: "no"
+
+  api:
+    build: ./backend
+    ports:
+      - "8085:8000"
+    environment:
+      MONGO_URI: "mongodb://mongodb:27017/?replicaSet=rs0&directConnection=false"
+      MONGO_DB: "analytics"
+      CORS_ORIGINS: "http://localhost:5260"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      mongo-init:
+        condition: service_completed_successfully
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5260:5173"
+    environment:
+      VITE_API_URL: "http://localhost:8085"
+      VITE_WS_URL: "ws://localhost:8085"
+    depends_on:
+      - api
+
+volumes:
+  mongo_data:
