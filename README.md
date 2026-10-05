@@ -1,5 +1,7 @@
 # MongoDB Time-Series Analytics Platform
 
+> **Maintained by [Jennita S](https://github.com/Jennita-Santhakumar)** · [LinkedIn](https://linkedin.com/in/jennitas) · jennitasanthakumar0@gmail.com
+
 An event analytics system built on MongoDB's time-series collections: complex aggregation pipelines (hourly rollups, percentile distributions, cohort/retention analysis), TTL-based auto-expiration, compound secondary indexes, and a live-updating dashboard. Backend is FastAPI + Motor (async), frontend is React + Recharts.
 
 > **Note on scale**: the PRD's target is 50M+ documents. We seeded and benchmarked against **5,000,000** real documents instead — see [Measured Results](#measured-results) for why (insert throughput on a single local container, not query performance, is the actual bottleneck at 50M+; see [Design Decisions](#design-decisions--trade-offs) for the full story). The seeding, indexing, and aggregation approach is identical either way and scales linearly with document count; `scripts/seed_data.py --total 50000000` runs the same code path.
@@ -125,3 +127,7 @@ The hourly and cohort queries see the PRD's claimed order-of-magnitude speedup b
 - **Database**: MongoDB 7.0 (time-series collections, `$facet`/`$percentile`/`$bucket` aggregations, single-node replica set)
 - **Frontend**: React, TypeScript, Vite, Recharts
 - **Infra**: Docker Compose, GitHub Actions CI
+
+## Credits
+
+Developed by Kabilesh Rajaselvan with contributions from Jennita S.
